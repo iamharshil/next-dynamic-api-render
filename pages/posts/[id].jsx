@@ -14,11 +14,17 @@ export async function getStaticPaths() {
 		(res) => res.json(),
 	);
 
-	const paths = posts.map((post) => ({
-		params: { id: post.id.toString() },
-	}));
-
-	return { paths, fallback: false };
+	return {
+		paths: posts.map((post) => {
+			const postId = post.id.toString();
+			return {
+				params: {
+					id: postId,
+				},
+			};
+		}),
+		fallback: false,
+	};
 }
 
 export async function getStaticProps({ params }) {

@@ -35,13 +35,15 @@ function Post({ post  }) {
 }
 async function getStaticPaths() {
     const posts = await fetch("https://jsonplaceholder.typicode.com/posts").then((res)=>res.json());
-    const paths = posts.map((post)=>({
-            params: {
-                id: post.id.toString()
-            }
-        }));
     return {
-        paths,
+        paths: posts.map((post)=>{
+            const postId = post.id.toString();
+            return {
+                params: {
+                    id: postId
+                }
+            };
+        }),
         fallback: false
     };
 }
